@@ -1,45 +1,45 @@
 # Marlin 3D Printer Firmware for Flying Bear 4S and 5
 
-Это конфигурация [официального Marlin](https://github.com/MarlinFirmware/Marlin) для принтера Flying Bear Ghost 4S и 5. На данный момент поддерживаются платы MKS Robin Nano 1.x, MKS Robin Nano v2, MKS Robin Nano-s v1.3, MKS Robin Nano v1.3
+This is the configuration [official Marlin](https://github.com/MarlinFirmware/Marlin) for Flying Bear Ghost 4S and 5 printer. MKS Robin Nano 1.x, MKS Robin Nano v2, MKS Robin Nano-s v1.3, MKS Robin Nano v1.3 boards are currently supported
 
-В данном репозитории есть несколько веток:
+This repository has several branches:
 
-* [FB4S_WIFI](https://github.com/Sergey1560/Marlin_FB4S/tree/FB4S_WIFI) - эта, основная ветка. Эта ветка содержит дополнительный код для работы с модулем [MKS WIFI](https://github.com/makerbase-mks/MKS-WIFI), установленным в FB4S и FB5. Загрузка файлов через стандартный plugin в Cura. Классический интерфейс Color UI.
-* [vanilla_fb_2.0.x](https://github.com/Sergey1560/Marlin_FB4S/tree/vanilla_fb_2.0.x) - ветка на основе 2.0.x ветки Marlin. Никаких изменений в коде. Все изменения только в файлах конфигурации, под платы robin nano и принтеры Flying Bear. Классический интерфейс Color UI. WIFI модуль не работает.
-* [MKS_UI](https://github.com/Sergey1560/Marlin_FB4S/tree/MKS_UI) - ветка на основе 2.0.x ветки Marlin. В коде есть очень небольшое изменение размера буфера, для сборки на STM32F1. На STM32F4 никаких изменений в коде нет. Все изменения только в файлах конфигурации, под платы robin nano и принтеры Flying Bear. Интерфейс MKS UI. WIFI модуль работает.
+* [FB4S_WIFI](https://github.com/Sergey1560/Marlin_FB4S/tree/FB4S_WIFI) - this is the master branch. This thread contains additional code to work with the [MKS WIFI](https://github.com/makerbase-mks/MKS-WIFI) module installed in FB4S and FB5. Uploading files through a standard plugin in Cura. Classic Color UI interface.
+* [vanilla_fb_2.0.x](https://github.com/Sergey1560/Marlin_FB4S/tree/vanilla_fb_2.0.x) - branch based on Marlin 2.0.x branch. No code changes. All changes are only in configuration files, for robin nano boards and Flying Bear printers. Classic Color UI interface. WIFI module is not working.
+* [MKS_UI](https://github.com/Sergey1560/Marlin_FB4S/tree/MKS_UI) - branch based on 2.0.x Marlin branch. There is a very small buffer size change in the code to build on STM32F1. There are no changes in the code on STM32F4. All changes are only in configuration files, for robin nano boards and Flying Bear printers. MKS UI interface. WIFI module is working.
 
-Если у вас есть какие-то вопросы по настройке прошивки или по ее использованию, вы можете задать свой вопрос в [telegram группе](https://t.me/Ghostbustersss).
+If you have any questions about setting up the firmware or using it, you can ask your question in the [telegram group](https://t.me/Ghostbustersss).
 
-## MKS WIFI модуль
+## MKS WIFI module
 
-### Работает
+### Works
 
-* Отображение температуры в Cura
-* Просмотр содержимого SD карты
-* Удаление файлов с SD карты
-* Загрузка файлов на SD карту
-* Автоматический запуск печати при загрузке файла.
-* Настройка WIFI модуля (сеть и пароль)
+* Temperature display in Cura
+* View SD card content
+* Deleting files from SD card
+* Download files to SD card
+* Automatically start printing when a file is loaded.
+* WIFI module setting (network and password)
 
-### Не работает
+### Does not work
 
-* **Имена файлов на русском** Переименуйте файл в Cura
-* Работает только с картами стандарта SD card v2.0 и новее. Это все карты от 1Гб и больше.
-* Отображение состояния принтера (печатает, не печатает) в Cura
+* **File names in Russian** Rename the file in Cura
+* Only works with SD card v2.0 and later. These are all cards from 1GB and more.
+* Printer status display (printing, not printing) in Cura
 
-## Как работает, как настроить
+## How it works, how to set up
 
-### Варианты прошивки
+### Firmware options
 
-Если вас устраивает типовой вариант конфигурации, можно взять готовые файлы прошивки в разделе [Releases](https://github.com/Sergey1560/Marlin_FB4S/releases)
+If you are satisfied with the typical configuration option, you can take ready-made firmware files in the [Releases] section (https://github.com/Sergey1560/Marlin_FB4S/releases)
 
-Вернуть стандартную прошивку можно в любой момент. Просто запишите ее на SD и включите принтер. Взять стандартную прошивку для нужной платы можно [тут](https://sergey1560.github.io/fb4s_howto/mks_board/)
+You can return the standard firmware at any time. Just write it to SD and turn on the printer. You can get the standard firmware for the required board [here] (https://sergey1560.github.io/fb4s_howto/mks_board/)
 
-Для настройки под свои нужды, прошивку нужно собрать самостоятельно.
+To customize to your needs, you need to assemble the firmware yourself.
 
-Плата Robin Nano-s v1.3 и Robin Nano v1.3  сделана на другом микроконтроллере (stm32f407), поэтому для сборки прошивки под эту плату нужно изменить:
+The Robin Nano-s v1.3 and Robin Nano v1.3 board is made on a different microcontroller (stm32f407), so to build the firmware for this board, you need to change:
 
-* В файле Marlin/Configuration.h параметр MOTHERBOARD:
+* In the Marlin/Configuration.h file, the MOTHERBOARD parameter:
 
 ```C
 #ifndef MOTHERBOARD
@@ -47,45 +47,45 @@
 #endif
 ```
 
-* В файле platformio.ini в параметре default_envs указать mks_robin_nano_v1_3_f4
+* In the platformio.ini file, specify mks_robin_nano_v1_3_f4 in the default_envs parameter
 
-### Первое, что нужно сделать, после прошивки
+### The first thing to do after flashing
 
-Первое, что нужно сделать после прошивки, это проинициализировать EEPROM (память внутри принтера), сбросив настройки по-умолчанию. После прошивки там находится мусор, который может привести к совершенно необъяснимому поведению.
+The first thing to do after the firmware is to initialize the EEPROM (memory inside the printer), resetting the default settings. After the firmware, there is garbage there, which can lead to completely inexplicable behavior.
 
-Делается это через меню Configuration -> Advanced settings -> Initialize eeprom.
+This is done through the menu Configuration -> Advanced settings -> Initialize eeprom.
 
-### Как собрать прошивку самому
+### How to build the firmware yourself
 
-[Видео](https://www.youtube.com/watch?v=HirIZk0rWOQ) Дмитрия Соркина
+[Video](https://www.youtube.com/watch?v=HirIZk0rWOQ) by Dmitry Sorkin
 
-Плата, Robin Nano v1.1 (1.2), уже выбрана в качестве платы по-умолчанию. Для плат Robin Nano-s v1.3 и Robin Nano v1.3 нужно изменить параметры сборки (описано выше).
+The board, Robin Nano v1.1 (1.2), is already selected as the default board. For Robin Nano-s v1.3 and Robin Nano v1.3 boards, you need to change the build parameters (described above).
 
-В меню Platformio можно не выбирать плату, а использовать сочетание клавиш Ctrl+Alt+B.
+In the Platformio menu, you can not select a board, but use the keyboard shortcut Ctrl + Alt + B.
 
-После компиляции, готовая прошивка лежит в .pio/build/mks_robin_nano35/Robin_nano35.bin для плат Robin Nano v1.1(1.2) и в .pio/build/mks_robin_nano_v1_3/Robin_nano35.bin для плат Robin Nano-s v1.3 и Robin Nano v1.3
+After compilation, the finished firmware is in .pio/build/mks_robin_nano35/Robin_nano35.bin for Robin Nano v1.1(1.2) boards and in .pio/build/mks_robin_nano_v1_3/Robin_nano35.bin for Robin Nano-s v1.3 and Robin boards Nano v1.3
 
-На SD карту нужно записывать именно Robin_nano35.bin, а не firmaware.bin
+It is Robin_nano35.bin that needs to be written to the SD card, not firmaware.bin
 
-### Что нужно настроить, если собираете сами
+### What you need to configure if you assemble it yourself
 
-Нужно настроить направления движения по осям под свои драйвера в файле [Configuration.h](./Marlin/Configuration.h) (параметры INVERT_?_DIR, строка 1373).
+You need to set the direction of movement along the axes to suit your drivers in the file [Configuration.h](./Marlin/Configuration.h) (parameters INVERT_?_DIR, line 1373).
 
-Для удобства, в файле [Configuration.h](./Marlin/Configuration.h) уже есть готовые наборы настроек для всех типовых конфигураций.
+For convenience, the [Configuration.h](./Marlin/Configuration.h) file already contains ready-made sets of settings for all typical configurations.
 
-Для плат Robin Nano v1.1(1.2):
+For Robin Nano v1.1(1.2) boards:
 
-* ALL_DRV_2208 - 4 драйвера TMC 2208/2209
-* FB_4S_STOCK - 4 драйвера A4988. Это конфигурация для FB4S с стандартными драйверами.
-* FB_5_STOCK - 2 TMC 2208 (на осях X,Y) и 2 A4988 (на осях Z,E)
+* ALL_DRV_2208 - 4 TMC 2208/2209 drivers
+* FB_4S_STOCK - 4 A4988 drivers. This is the configuration for FB4S with standard drivers.
+* FB_5_STOCK - 2 TMC 2208 (on the X, Y axes) and 2 A4988 (on the Z, E axes)
 
-Для плат Robin Nano v1.3:
+For Robin Nano v1.3 boards:
 
-* FB_5_NANO_S_V1_3 - для платы Robin Nano-S v1.3
-* FB_5_NANO_V1_3_4TMC - Robin Nano v1.3 c 4 драйверами TMC 2208/2209
-* FB_5_NANO_V1_3 - Robin Nano v1.3 c 2 драйверами TMC 2208/2209 и 2 драйверами A4988
+* FB_5_NANO_S_V1_3 - for Robin Nano-S v1.3 board
+* FB_5_NANO_V1_3_4TMC - Robin Nano v1.3 with 4 TMC 2208/2209 drivers
+* FB_5_NANO_V1_3 - Robin Nano v1.3 with 2 TMC 2208/2209 drivers and 2 A4988 drivers
 
-В строке 1322 нужно выбрать только один из вариантов:
+On line 1322, you need to select only one of the options:
 
 ```C
 #define ALL_DRV_2208
@@ -96,76 +96,76 @@
 //#define FB_5_NANO_V1_3
 ```
 
-### Настройки WIFI, если вы используете готовую прошивку
+### WIFI settings if you are using prebuilt firmware
 
-Настройки сети хранятся в самом ESP-модуле. Есть несколько вариантов настройки:
+The network settings are stored in the ESP module itself. There are several customization options:
 
-* Если модуль уже был настроен, то возможно никакая настройка не понадобится
-* Если модуль не был настроен, либо по какой-то причине не смог подключиться к сети, то он запустится в режиме точки доступа с именем сети MKSWIFI??? (вместо ? будут произвольные символы). Подключитесь к этой сети, откройте страницу по адресу 192.168.4.1 и установите нужные настройки сети.
-* Если вы собираете прошивку сами, есть возможность передать модулю настройки при запуске. Для этого в файле [mks_wifi_settings.h](./Marlin/src/module/mks_wifi/mks_wifi_settings.h) можно задать параметры WIFI сети.
-Для того, чтобы эти настройки применялись при включении, "MKS_WIFI_ENABLED_WIFI_CONFIG" должен быть включен.
+* If the module has already been configured, then perhaps no u don't need a setting
+* If the module was not configured, or for some reason could not connect to the network, then it will start in access point mode with the network name MKSWIFI??? (instead of ? there will be arbitrary characters). Connect to this network, open the page at 192.168.4.1 and set the desired network settings.
+* If you compile the firmware yourself, it is possible to transfer settings to the module at startup. To do this, in the file [mks_wifi_settings.h](./Marlin/src/module/mks_wifi/mks_wifi_settings.h) you can set the WIFI network parameters.
+In order for these settings to be applied at power on, "MKS_WIFI_ENABLED_WIFI_CONFIG" must be enabled.
 
-### Состояние WIFI
+### WIFI status
 
-При успешном подключении к сети (или создании сети в режиме точки доступа) в стандартный UART, который выведен на USB разъем принтера, будет выведен IP адрес и название сети, а так же IP адрес будет отображен на экране принтера.
+Upon successful connection to the network (or creating a network in access point mode), the standard UART, which is output to the USB connector of the printer, will display the IP address and network name, and the IP address will be displayed on the printer screen.
 
-### Как понять, что WIFI работает
+### How to understand that WIFI is working
 
-При включении принтера, на экране отобразится статус "WIFI init"
+When the printer is turned on, the screen will display the status "WIFI init"
 
-Если ESP модулю удалось подключиться к сети, на экране будет IP адрес.
+If the ESP module succeeded in connecting to the network, the IP address will be displayed on the screen.
 
-При старте передачи файла отображается "Upload file", в процессе загрузки отображается прогресс в процентах.
+When the file transfer starts, "Upload file" is displayed, while the upload progress is displayed as a percentage.
 
-Если файл успешно принят отобразится "Upload done" и **прозвучит один звуковой сигнал**
+If the file is successfully accepted, "Upload done" will be displayed and **one beep will sound**
 
-Если во время приема файла были ошибки, отобразится надпись "Upload Failed" и **прозвучит три звуковых сигнала**
+If there were errors while uploading the file, "Upload Failed" will be displayed and **three beeps will sound**
 
-### BLTouch
+###BLTouch
 
-Bltouch отключен. [О подключении Bltouch](https://sergey1560.github.io/fb4s_howto/bltouch/).
+Bltouch is disabled. [About connecting Bltouch](https://sergey1560.github.io/fb4s_howto/bltouch/).
 
 ### Firmware retract
 
-Без использования опции "firmware retract" слайсер делает ретракты командами движения G1. В том месте, где нужно выполнить ректракт вставляются команды:
+Without using the "firmware retract" option, the slicer makes retracts with G1 motion commands. In the place where you need to execute the retract, the commands are inserted:
 
 ```
-G1 E-2 F2100 ; "Откатить" 2мм со скоростью 35мм/с (2100 мм/мин)
-команды движения
-G1 E2 F2100  ; Вернуть обратно 2мм со скоростью 35мм/с (2100 мм/мин)
+G1 E-2 F2100 ; Roll back 2mm at 35mm/s (2100mm/min)
+movement commands
+G1 E2 F2100 ; Return back 2mm at 35mm/s (2100mm/min)
 ```
-Для ректрактов в Marlin поддерживаются специальные команды - [G10](https://marlinfw.org/docs/gcode/G010.html) и [G11](https://marlinfw.org/docs/gcode/G011.html). В слайсере нужно включить поддержку firmware retract и тогда в том месте, где нужно "откатить" пластик будет вставлена команда G10, а там, где нужно его вернуть G11. Если никакие дополнительные параметры не установлены, будут использованы параметры из прошивки (2мм, 35мм/с). 
+Special commands for retracts in Marlin are [G10](https://marlinfw.org/docs/gcode/G010.html) and [G11](https://marlinfw.org/docs/gcode/G011.html). In the slicer, you need to enable support for firmware retract and then the G10 command will be inserted in the place where you need to "roll back" the plastic, and G11 where you need to return it. If no additional parameters are set, the parameters from the firmware (2mm, 35mm/s) will be used.
 
-Установить параметры можно командами [M207](https://marlinfw.org/docs/gcode/M207.html) и [M208](https://marlinfw.org/docs/gcode/M208.html).
+You can set the parameters with the commands [M207](https://marlinfw.org/docs/gcode/M207.html) and [M208](https://marlinfw.org/docs/gcode/M208.html).
 
-Для того, чтобы можно было настраивать ретракт в слайсере, в стартовый код нужно добавить M207. Как правило, слайсеры позволяют добавить макрос в качестве параметров команды.
+In order to be able to configure the retract in the slicer, you need to add M207 to the start code. Typically, slicers allow you to add macros as command parameters.
 
-Firmware retract позволяет изменять значения ректракта из меню принтера прямо во время печати.
+Firmware retract allows you to change the retract values ​​from the printer menu while printing.
 
-В Marlin есть функция автоматического распознования ректрактов командами G1 и замена их на G10/G11. Это функция отключена.
+Marlin has a function to automatically recognize retracts with G1 commands and replace them with G10/G11. This feature is disabled.
 
-Если в слайсере не включена поддержка firmware retract, все будет работать как обычно.
+If your slicer does not have firmware retract enabled, everything will work as usual.
 
 
-### Драйвера TMC2209
+### Driver TMC2209
 
-По-умолчанию прошивка настроена на работу с драйверами шаговых двигателей без программного управления. В случае применения драйверов TMC 2209 или TMC 2208 можно включить управление по UART. Подробнее о [настройке и подключении](https://sergey1560.github.io/fb4s_howto/tmc_uart/).
+By default, the firmware is configured to work with stepper motor drivers without software control. If you use the TMC 2209 or TMC 2208 drivers, you can enable UART control. Learn more about [configuring and connecting](https://sergey1560.github.io/fb4s_howto/tmc_uart/).
 
 ### EEPROM
 
-На платах Robin Nano установленно 2 микросхемы флеш памяти: AT24C16 (2кб, подключена по I2C) и W25Q64 (подключена по SPI).
+There are 2 flash memory chips installed on Robin Nano boards: AT24C16 (2kb, connected via I2C) and W25Q64 (connected via SPI).
 
-Размер данных, которые сохраняются в EEPROM зависит от включенных опций. При сохранении настроек командой M500, в ответе есть размер сохраняемых данных.
+The size of the data that is stored in the EEPROM depends on the enabled options. When saving settings with the M500 command, the response contains the size of the saved data.
 
-В качестве места хранения EEPROM в Marlin доступны несколько вариантов:
+There are several options available for EEPROM storage in Marlin:
 
-* SD карта
-* I2C EEPROM. Этот вариант не используется, драйвер отключен.
-* SPI_EEPROM. Хранение в W25Q64BV подключенной по SPI. Этот вариант используется по-умолчанию.
-* FLASH_EEPROM_EMULATION. Это хранение EEPROM в flash памяти STM32. Этот вариант не работает.
-* SRAM_EEPROM_EMULATION.  Этот вариант не работает.
+* SD card
+* I2C EEPROM. This option is not used, the driver is disabled.
+* SPI_EEPROM. Storage in W25Q64BV connected via SPI. This option is used by default.
+* FLASH_EEPROM_EMULATION. This is EEPROM storage in STM32 flash memory. This option doesn't work.
+* SRAM_EEPROM_EMULATION. This option doesn't work.
 
-Для включения в [Configuration.h](./Marlin/Configuration.h) в разделе EEPROM нужно указать нужный define. Возможные варианты указаны в комментарии. Пример:
+To include in [Configuration.h](./Marlin/Configuration.h) in the EEPROM section, you need to specify the desired define. Possible options are indicated in the comments. Example:
 
 ```C
 #if ENABLED(EEPROM_SETTINGS)
@@ -185,8 +185,8 @@ EEPROM_W25Q
 #define SPI_EEPROM_W25Q
 #define SPI_EEPROM
 #define SPI_EEPROM_OFFSET 0x700000
-#define USE_WIRED_EEPROM    1
-#define MARLIN_EEPROM_SIZE  2048
+#define USE_WIRED_EEPROM 1
+#define MARLIN_EEPROM_SIZE 2048
 #endif
 
 #if ENABLED(EEPROM_SD)
@@ -197,74 +197,15 @@ EEPROM_W25Q
 #undef I2C_EEPROM_AT24C16
 #undef SPI_EEPROM_W25Q
 #undef USE_WIRED_EEPROM
-#define MARLIN_EEPROM_SIZE  4096
+#define MARLIN_EEPROM_SIZE 4096
 #endif
 
-#define EEPROM_AUTO_INIT  // Init EEPROM automatically on any errors.
+#define EEPROM_AUTO_INIT // Init EEPROM automatically on any errors.
 #endif
 ```
 
-Для изменения места хранения EEPROM нужно заменить "#define EEPROM_W25Q" на другой вариант.
+To change the storage location of the EEPROM, you need to replace "#define EEPROM_W25Q" with another option.
 
-### Загрузка прошивки по WIFI
+### Download firmware via WIFI
 
-Есть возможность отправлять прошивку на принтер через WIFI. Для этого в файле [platformio.ini](./platformio.ini) в разделе [env:mks_robin_nano35] нужно указать IP адрес принтера в опции upload_flags.
-
-Передача файла происходит при помощи curl, поэтому надо или добавить curl в $PATH, либо указать полный путь в файле [mks_robin_nano35.py](./buildroot/share/PlatformIO/scripts/mks_robin_nano35.py) в строке 43.
-
-После настройки, для отправки прошивки на принтер, в меню platformio нужно выбрать Upload или нажать Ctrl+Alt+U.
-
-После успешной передачи файла принтер перезагрузится автоматически.
-
-## WIFI модуль, отправка команд и файлов
-
-Для отправки команд и файлов на принтер не обязательно использовать Cura. Для отправки можно использовать простые инструменты - curl и netcat.
-
-Для отправки команд используется tcp socket на порт 8080. Пример с netcat:
-
-```
-nc 192.168.0.105 8080
-```
-
-Вместо netcat можно использовать telnet.
-
-Можно отправлять g-код команды, и получать ответ.
-
-Для отправки файлов можно воспользоваться curl:
-
-```
-curl -v -H "Content-Type:application/octet-stream" http://192.168.0.105/upload?X-Filename=sd_file.gcode --data-binary @local_file.gcode
-```
-
-* *sd_file.gcode* - имя файла под которым будет сохранение на sd карте
-* *local_file.gcode* - имя файла для отправки
-
-В данном примере на принтер с IP 192.168.0.105 будет отправлен файл local_file.gcode, который будет сохранен на sd карте под именем sd_file.gcode
-
-## Загрузка настроек в EEPROM из файла
-
-При обновлении прошивки рекомендуется делать сброс настроек к значению по-умолчанию и устанавливать их заново. Для того, чтобы не делать это при каждом обновлении вручную, можно создать на sd карте файл с нужными командами и просто запускать его на печать. Пример файла с настройками:
-
-```
-M502 ;Сброс настроек
-M500 ;Сохранить настройки (аналог Initialize eeprom)
-
-M92 X80 Y80 Z400 E421 ;Установка шагов Step/mm по осям
-
-M301 P19 I1 D64  ;PID сопла
-M304 P26 I4 D102 ;PID стола
-
-M851 X37 Y-20 Z-0.95 ;Probe offset
-
-M906 X700 Y800 Z800 ;Ток драйверов шаговых двигателей
-M906 T0 E450
-
-M603 L150 U150 ;Длина загрузки-выгрузки филамента
-M500 ;Сохранить настройки
-```
-
-## Отслеживание состояния печати по WIFI
-
-Во время печати прием данных от WIFI модуля отключен. Это сделано для того, чтобы в очередь команд не попал никакой мусор от от esp. Однако в обратную сторону, от МК к esp, передача работает. Поэтому если нужно отслеживать состояние печати удаленно, в стартовый код нужно добавить команду [M155](https://marlinfw.org/docs/gcode/M155.html) для отображения температуры и [M27](https://marlinfw.org/docs/gcode/M027.html) для отображения прогресса печати в байтах. В этом случае МК сам, через указанное в параметрах количество секунд, будет слать отчеты. Получать их можно подключившись к сокету на порт 8080. Модуль MKS WIFI поддерживает только одно соединение одновременно, поэтому Cura должна быть закрыта.
-
-Для получения информации о текущей высоте, нужно добавить пост-процессинг в слайсере. В Cura это можно сделать в Extentions->Post processing->Modify G-code. Добавить скрипт на "Insert at layer change" и команду M114.
+It is possible to send the firmware to the printer via WIFI. To do this, in the file [platformio.ini] (./platform
