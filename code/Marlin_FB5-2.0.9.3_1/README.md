@@ -208,4 +208,63 @@ To change the storage location of the EEPROM, you need to replace "#define EEPRO
 
 ### Download firmware via WIFI
 
-It is possible to send the firmware to the printer via WIFI. To do this, in the file [platformio.ini] (./platform
+It is possible to send the firmware to the printer via WIFI. To do this, in the file [platformio.ini] (./platformio.ini) in the [env:mks_robin_nano35] section, you need to specify the IP address of the printer in the upload_flags option.
+
+The file is transferred using curl, so you must either add curl to $PATH or specify the full path in the file [mks_robin_nano35.py](./buildroot/share/PlatformIO/scripts/mks_robin_nano35.py) on line 43.
+
+After configuration, to send the firmware to the printer, select Upload in the platformio menu or press Ctrl+Alt+U.
+
+After a successful file transfer, the printer will restart automatically.
+
+## WIFI module, sending commands and files
+
+You don't have to use Cura to send commands and files to the printer. For sending, you can use simple tools - curl and netcat.
+
+To send commands, use tcp socket on port 8080. An example with netcat:
+
+```
+nc 192.168.0.105 8080
+```
+
+You can use telnet instead of netcat.
+
+You can send a command g-code, and receive a response.
+
+You can use curl to send files:
+
+```
+curl -v -H "Content-Type:application/octet-stream" http://192.168.0.105/upload?X-Filename=sd_file.gcode --data-binary @local_file.gcode
+```
+
+* *sd_file.gcode* - the name of the file under which will be saved on the sd card
+* *local_file.gcode* - file name to send
+
+In this example, the local_file.gcode file will be sent to the printer with IP 192.168.0.105, which will be saved on the sd card under the name sd_file.gcode
+
+## Load settings into EEPROM from file
+
+When updating the firmware, it is recommended to reset the settings to the default value and install them again. In order not to do this manually with each update, you can create a file with the necessary commands on the sd card and simply print it. An example of a settings file:
+
+```
+M502 ;Reset settings
+M500 ;Save settings (similar to Initialize eeprom)
+
+M92 X80 Y80 Z400 E421 ;Axes Step/mm setting
+
+M301 P19 I1 D64 ;PID nozzle
+M304 P26 I4 D102 ;PID table
+
+M851 X37 Y-20 Z-0.95 ;Probe offset
+
+M906 X700 Y800 Z800 ; Stepper motor driver current
+M906 T0 E450
+
+M603 L150 U150 ;Filament loading/unloading length
+M500 ;Save settings
+```
+
+## WIFI print status monitoring
+
+During printing, data reception from the WIFI module is disabled. This is done so that no garbage from esp gets into the command queue. However, in the opposite direction, from MK to esp, the transmission works. Therefore, if you need to monitor the print status remotely, you need to add the command [M155](https://marlinfw.org/docs/gcode/M155.html) to the start code to display the temperature and [M27](https://marlinfw.org/ docs/gcode/M027.html) to show print progress in bytes. In this case, the MK itself, after the number of seconds specified in the parameters, will send reports. You can receive them by connecting to a socket on port 8080. The MKS WIFI module only supports one connection at a time, so Cura must be closed.
+
+To get information about the current height, you need to add post-processing in the slicer. In Cura, this can be done in Extentions->Post processing->Modify G-code. Add script to "Insert at layer change" and command M114.
